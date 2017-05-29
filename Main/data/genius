@@ -1,0 +1,8 @@
+Control de movimiento
+Gatillo	Gatillo	1	BUTTON	Trigger	0	0.0	0.0
+Rojo	Rojo	1	BUTTON	Thumb	0	0.0	0.0
+BC	BC	1	BUTTON	Thumb 2	0	0.0	0.0
+BD	BD	1	BUTTON	Top	0	0.0	0.0
+Xx	Xx	3	SLIDER	x	0	1.0	0.0
+Yy	Yy	3	SLIDER	y	0	1.0	0.0
+Slider	Slider	3	SLIDER	slider	0	1.0	0.0

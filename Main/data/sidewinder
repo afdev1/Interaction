@@ -1,0 +1,12 @@
+Control de cámara
+Gatillo	Gatillo	1	BUTTON	Trigger	0	0.0	0.0
+B2	B2	1	BUTTON	Thumb	0	0.0	0.0
+B3	B3	1	BUTTON	Thumb 2	0	0.0	0.0
+B4	B4	1	BUTTON	Top	0	0.0	0.0
+B5	B5	1	BUTTON	Top 2	0	0.0	0.0
+B6	B6	1	BUTTON	Pinkie	0	0.0	0.0
+B7	B7	1	BUTTON	Base	0	0.0	0.0
+B8	B8	1	BUTTON	Base 2	0	0.0	0.0
+Xx	Xx	3	SLIDER	x	0	1.0	0.0
+Yy	Yy	3	SLIDER	y	0	1.0	0.0
+Slider	Slider	3	SLIDER	slider	0	1.0	0.0
