@@ -28,22 +28,15 @@ HIDAgent hidAgent;
 
 
 public class HIDAgent extends Agent {
-  // array of sensitivities that will multiply the sliders input
-  // found pretty much as trial an error
-  float [] sens = {10, 10, 10, 3, 1, 5};
+  float [] sens = {10, 10, 10, 6, 4, 10};
   
   public HIDAgent(Scene scn) {
     super(scn.inputHandler());
-    // SN_ID will be assigned an unique id with 6 DOF's. The id may be
-    // used to bind (frame) actions to the gesture, pretty much in
-    // the same way as it's done with the LEFT and RIGHT mouse gestures.
     SN_ID = MotionShortcut.registerID(6, "SN_SENSOR");
     addGrabber(avionFrame);//scene.eyeFrame());
     setDefaultGrabber(avionFrame);//scene.eyeFrame());
   }
   
-  // we need to override the agent sensitivities method for the agent
-  // to apply them to the input data gathered from the sliders
   @Override
   public float[] sensitivities(MotionEvent event) {
     if (event instanceof DOF6Event)
@@ -52,20 +45,27 @@ public class HIDAgent extends Agent {
       return super.sensitivities(event);
   }
   
-  // polling is done by overriding the feed agent method
-  // note that we pass the id of the gesture
   @Override
   public DOF6Event feed() {
-    return new DOF6Event(abs(gXx.getValue()+0.2549)>0.23?(gXx.getValue()+0.2549):0 , abs(gYy.getValue()+0.19215)>0.122?(gYy.getValue()+0.19215):0, -mYy.getValue(), abs(gYy.getValue()+0.19215)>0.122?(gYy.getValue()+0.19215):0, mXx.getValue(), abs(gXx.getValue()+0.2549)>0.23?(gXx.getValue()+0.2549):0, BogusEvent.NO_MODIFIER_MASK, SN_ID);
+    float accel = (-mSlider.getValue()+2);
+    return new DOF6Event(
+    abs(gXx.getValue()+0.2549)>0.23?(gXx.getValue()+0.2549)*accel:0, 
+    abs(gYy.getValue()+0.19215)>0.122?(gYy.getValue()+0.19215)*accel:0, 
+    -mYy.getValue()*accel, 
+    abs(gYy.getValue()+0.19215)>0.122?(gYy.getValue()+0.19215):0, 
+    mXx.getValue(), 
+    abs(gXx.getValue()+0.2549)>0.23?(gXx.getValue()+0.2549):0, 
+    
+    BogusEvent.NO_MODIFIER_MASK, SN_ID);
   }
 }
 
 void setup(){
-  size(500,500,P3D);
+  size(800,800,P3D);
   loadControls();
   texmap = loadImage("world32k.jpg"); 
   initializeSphere(sDetail);
-  avion = loadShape("3d-model.obj");
+  avion = loadShape("plane.obj");
   scene = new Scene(this);
   
   rect(0, 0, 1000, 1000);
@@ -109,17 +109,18 @@ void draw(){
   //scene.display();
   scene.drawFrames();
   
-  scene.camera().lookAt(avionFrame.position());
-  scene.eyeFrame().setPosition(camaraFrame.position());
   
-  scene.camera().setUpVector(avionFrame.position());
+  //scene.eyeFrame().setPosition(camaraFrame.position());
+  scene.camera().setPosition(camaraFrame.position());
+  scene.camera().setOrientation(avionFrame.orientation().inverse());
+  scene.camera().lookAt(avionFrame.position());
 
   
   //scene.eyeFrame().orientation().lookAt(avionFrame.position());
   
   //scene.eyeFrame().rotate(new Quat(PI, 0, 0));
   
-  
+  //println(-mSlider.getValue()+2);
   //shape(avion, 0,0,1,1);
   //println(mXx.getValue() + " " + mYy.getValue() + "," + gXx.getValue() + " " + gYy.getValue() );
   //println(scene.eyeFrame().position());
