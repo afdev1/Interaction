@@ -28,7 +28,7 @@ HIDAgent hidAgent;
 
 
 public class HIDAgent extends Agent {
-  float [] sens = {10, 10, 20, 6, 4, 10};
+  float [] sens = {10, 10, 50, 5, 4, 5};
   
   public HIDAgent(Scene scn) {
     super(scn.inputHandler());
@@ -49,10 +49,10 @@ public class HIDAgent extends Agent {
   public DOF6Event feed() {
     float accel = (-mSlider.getValue()+2);
     return new DOF6Event(
-    abs(gXx.getValue()+0.2549)>0.23?(gXx.getValue()+0.2549)*accel:0, 
-    abs(gYy.getValue()+0.19215)>0.122?(gYy.getValue()+0.19215)*accel:0, 
+    abs(gXx.getValue()+0.2549)>0.23?(gXx.getValue()+0.2549):0, 
+    (abs(gYy.getValue()+0.19215)>0.122?(gYy.getValue()+0.19215):0) + gSlider.getValue()*20, 
     -mYy.getValue()*accel, 
-    abs(gYy.getValue()+0.19215)>0.122?(gYy.getValue()+0.19215):0, 
+    (abs(gYy.getValue()+0.19215)>0.122?(gYy.getValue()+0.19215):0), 
     mXx.getValue(), 
     abs(gXx.getValue()+0.2549)>0.23?(gXx.getValue()+0.2549):0, 
     
@@ -74,7 +74,7 @@ void setup(){
   scene.setAxesVisualHint(false);  
   scene.showAll();
   
-  s = loadShape("The City.obj");
+  s = loadShape("city.obj");
   
   hidAgent = new HIDAgent(scene);
   
@@ -102,7 +102,7 @@ void setup(){
 void draw(){
   background(255);
     
-  directionalLight(255, 255, 255, -0.5, -1, 0);
+  directionalLight(255, 255, 255, 0.5, -1, 0);
   shape(s, -100, 0);
   scene.drawFrames();
   
